@@ -2,9 +2,11 @@ import {StyleSheet, TextStyle} from 'react-native';
 import {normalize, COLORS} from '@constants';
 
 const BASIC_TEXT: TextStyle = {fontSize: normalize(18), fontWeight: 'bold'};
+const IMAGEN_SIZE = normalize(50);
 export default StyleSheet.create({
   container: {
     flexGrow: 1,
+    backgroundColor: COLORS.white,
   },
   separator: {
     height: normalize(2),
@@ -12,6 +14,7 @@ export default StyleSheet.create({
   },
   itemContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     height: normalize(50),
   },
   listContainer: {
@@ -32,7 +35,10 @@ export default StyleSheet.create({
     fontWeight: '400',
   },
   imagen: {
-    width: 50,
-    height: 50,
+    width: IMAGEN_SIZE,
+    height: IMAGEN_SIZE,
+  },
+  footer: {
+    height: normalize(120),
   },
 });
