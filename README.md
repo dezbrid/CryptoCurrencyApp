@@ -21,7 +21,7 @@ cd ios
 yarn pod install 
 ```
 
-And make the file <kbd>.env</kbd> with the following environment variable.
+And make the file <kbd>.env</kbd> in the root with the following environment variable.
 
 ```bash
 BASE_URL_COIN_CAP=https://assets.coincap.io/
