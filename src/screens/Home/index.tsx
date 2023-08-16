@@ -29,12 +29,16 @@ type ListKeyExtractor = (item: TickerData, index: number) => string;
 
 const REQUEST_LIMIT = 100;
 
+/* The code is defining a functional component called "Home" that represents the main screen of a React
+Native app. */
 export function Home({navigation}: HomeProps) {
   const [mainList, setMainList] = useState<MainListInfo>(INITIAL_MAIN_LIST);
   const [tickerList, setTickerList] = useState<TickerData[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
+  /* The `handleGetTikers` function is a callback function that is used to fetch ticker data from an
+ API. It takes two parameters: `start` and `limit`, which determine the range of data to fetch. */
   const handleGetTikers = useCallback(
     async (start: number, limit: number) => {
       if (searchValue === '') {
@@ -65,9 +69,19 @@ export function Home({navigation}: HomeProps) {
     [searchValue],
   );
 
+  /**
+   * The function `handleOnRefresh` is used to refresh the tikers by calling the `handleGetTikers`
+   * function with the parameters 0 and REQUEST_LIMIT.
+   */
   const handleOnRefresh = () => {
     handleGetTikers(0, REQUEST_LIMIT);
   };
+
+  /**
+   * The function `handleEndReached` is used to handle the event when the end of a list is reached in a
+   * React component, and it fetches more data if the current data length is less than the specified
+   * limit.
+   */
   const handleEndReached = () => {
     const mainListLength = mainList.currentData.length;
     const nearOfLimit = mainList.limitData - mainListLength;
@@ -78,9 +92,19 @@ export function Home({navigation}: HomeProps) {
       );
     }
   };
+
+  /**
+   * The handleNavigation function navigates to the 'Details' screen with the provided id as a
+   * parameter.
+   * @param {string} id - The `id` parameter is a string that represents the identifier of a specific
+   * item or entity.
+   */
   const handleNavigation = (id: string) => {
     navigation.navigate('Details', {id});
   };
+  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+`useEffect` hook is used to update the `tickerList` state based on the `searchValue` and
+`mainList.currentData` states. */
   useEffect(() => {
     if (searchValue !== '') {
       const filterByName = mainList.currentData.filter(item =>
@@ -91,9 +115,16 @@ export function Home({navigation}: HomeProps) {
       setTickerList(mainList.currentData);
     }
   }, [mainList.currentData, searchValue]);
+
+  /* The `useEffect` hook is used to update the `tickerList` state whenever the `mainList.currentData`
+state changes. */
   useEffect(() => {
     setTickerList(mainList.currentData);
   }, [mainList.currentData]);
+
+  /* The `useEffect` hook is used to call the `handleGetTikers` function when the component mounts or
+ when the `handleGetTikers` function changes. In this case, it is called with the parameters 0 and
+ REQUEST_LIMIT, which fetches the initial ticker data. */
   useEffect(() => {
     handleGetTikers(0, REQUEST_LIMIT);
   }, [handleGetTikers]);

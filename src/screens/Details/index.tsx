@@ -9,16 +9,35 @@ import {TickerData, DetailProps} from '@types';
 
 import styles from './styles';
 
+/**
+ * The `Details` function is a React component that displays the details of a ticker, including its
+ * rank, name, symbol, price in USD and BTC, and a corresponding image.
+ * @param {DetailProps}  - - `DetailProps`: This is the type definition for the props passed to the
+ * `Details` component. It may include properties such as `route`, which is used to access the
+ * navigation route parameters.
+ * @returns The `Details` component is returning a JSX element that represents the UI of the component.
+ * It includes a `SafeAreaView` component as the root container, which contains a `FastImage` component
+ * for displaying an image, and a `View` component for displaying various text elements. The text
+ * elements display information about a coin's rank, name, symbol, price in USD, price in BTC, and
+ */
 export function Details({route}: DetailProps) {
   const {id: idTiker} = route.params;
   const [coinDetail, setCoinDetail] = useState<TickerData>();
-  console.log('coinDetail', coinDetail);
+  /**
+   * The function "handleGetDetailTiker" is an asynchronous function that retrieves the detail of a
+   * ticker by its ID and sets the retrieved detail in the state variable "coinDetail".
+   * @param {string} id - The `id` parameter is a string that represents the identifier of a ticker.
+   */
   const handleGetDetailTiker = async (id: string) => {
     try {
       const detail = await getTIkerDetial(id);
       setCoinDetail(detail);
     } catch (error) {}
   };
+
+  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+  `useEffect` hook is used to call the `handleGetDetailTiker` function whenever the `idTiker`
+  variable changes. */
   useEffect(() => {
     handleGetDetailTiker(idTiker);
   }, [idTiker]);
