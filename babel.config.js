@@ -37,6 +37,7 @@ module.exports = {
           '@routes': './src/routes',
           '@config': './src/config',
           '@services': './src/services',
+          '@components': './src/components',
         },
       },
     ],

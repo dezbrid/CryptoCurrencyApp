@@ -1,27 +1,37 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text, FlatList, View, ListRenderItem} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  FlatList,
+  View,
+  ListRenderItem,
+  TouchableOpacity,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
+
 import {BASE_URL_COIN_CAP} from '@env';
+import {TextPorcentColor} from '@components';
 import {getTikers} from '@services';
-import {CryptoData} from '@types';
+import {TickerData, HomeProps} from '@types';
 
 import styles from './styles';
 
 interface MainListInfo {
-  currentData: CryptoData[];
+  currentData: TickerData[];
   limitData: number;
 }
 const INITIAL_MAIN_LIST: MainListInfo = {
   currentData: [],
   limitData: 0,
 };
-type ListKeyExtractor = (item: CryptoData, index: number) => string;
+type ListKeyExtractor = (item: TickerData, index: number) => string;
 
 const REQUEST_LIMIT = 100;
-export function Home() {
+
+export function Home({navigation}: HomeProps) {
   const [mainList, setMainList] = useState<MainListInfo>(INITIAL_MAIN_LIST);
   const [loading, setLoading] = useState<boolean>(false);
-  console.log('mainList', mainList);
+
   const handleGetTikers = async (start: number, limit: number) => {
     try {
       setLoading(true);
@@ -60,6 +70,10 @@ export function Home() {
       );
     }
   };
+  const handleNavigation = (id: string) => {
+    navigation.navigate('Details', {id});
+  };
+
   useEffect(() => {
     handleGetTikers(0, REQUEST_LIMIT);
   }, []);
@@ -68,8 +82,11 @@ export function Home() {
   const separatorView = () => <View style={styles.separator} />;
   const keyExtractor: ListKeyExtractor = (item, index) => item.id + index;
   const listEmptyComponent = () => <View />;
-  const renderItem: ListRenderItem<CryptoData> = ({item, index}) => (
-    <View style={styles.itemContainer} key={index}>
+  const renderItem: ListRenderItem<TickerData> = ({item, index}) => (
+    <TouchableOpacity
+      style={styles.itemContainer}
+      key={index}
+      onPress={() => handleNavigation(item.id)}>
       <FastImage
         style={styles.imagen}
         source={{
@@ -80,22 +97,19 @@ export function Home() {
       />
       <Text style={styles.textName}>{item.name}</Text>
       <Text style={styles.textCoinUSD}>
-        {item.price_usd + '('}
-        <Text
-          style={
-            item.percent_change_24h.charAt(0) === '-'
-              ? styles.textPorcentDown
-              : styles.textPorcentUp
-          }>
-          {item.percent_change_24h + '%'}
-        </Text>
+        {`${item.price_usd} (`}
+        <TextPorcentColor
+          textValue={item.percent_change_24h}
+          type="porcent"
+          style={styles.textPorcent}
+        />
         {')'}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList<CryptoData>
+      <FlatList<TickerData>
         data={mainList.currentData}
         extraData={mainList.currentData}
         renderItem={renderItem}

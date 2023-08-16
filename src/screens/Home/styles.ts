@@ -28,12 +28,7 @@ export default StyleSheet.create({
     color: COLORS.Tundora,
     ...BASIC_TEXT,
   },
-  textPorcentUp: {
-    color: COLORS.apple,
-    fontWeight: '400',
-  },
-  textPorcentDown: {
-    color: COLORS.darkBurgundy,
+  textPorcent: {
     fontWeight: '400',
   },
   imagen: {

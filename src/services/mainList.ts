@@ -1,20 +1,19 @@
-import {TikerResponse} from '@types';
+import {TickerResponse} from '@types';
 import {axiosCoinLore} from '@config/axios';
 import {AxiosResponse} from 'axios';
 
-const ENDPOINT_TICKER = 'tickers/';
+const ENDPOINT_TICKERS = 'tickers/';
 
 export const getTikers = async (
   start: number,
   limit: number,
-): Promise<TikerResponse> => {
+): Promise<TickerResponse> => {
   try {
-    const response: AxiosResponse<TikerResponse, any> = await axiosCoinLore.get(
-      `${ENDPOINT_TICKER}/?start=${start}&limit=${limit}`,
+    const response: AxiosResponse<TickerResponse, any> = await axiosCoinLore.get(
+      `${ENDPOINT_TICKERS}/?start=${start}&limit=${limit}`,
     );
     return response.data;
   } catch (error) {
-    console.error('getTikers-error', error);
     throw error;
   }
 };

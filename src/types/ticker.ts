@@ -1,4 +1,4 @@
-export interface CryptoData {
+export interface TickerData {
   csupply: string;
   id: string;
   market_cap_usd: string;
@@ -17,8 +17,8 @@ export interface CryptoData {
   volume24a: number;
 }
 
-export interface TikerResponse {
-  data: CryptoData[];
+export interface TickerResponse {
+  data: TickerData[];
   info: {
     coins_num: number;
     time: number;
