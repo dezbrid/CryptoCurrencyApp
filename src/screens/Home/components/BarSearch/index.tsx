@@ -12,26 +12,42 @@ interface BarSearchProps {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
 }
-/* The code is defining a functional component called `BarSearch` that takes in two props: `value` and
-`setValue`. */
+/**
+ * This is a functional component called `BarSearch` that renders a search bar with an input field, a search icon, and a clear icon.
+ * It takes in two props: `value` and `setValue`.
+ *
+ * @component
+ * @example
+ * import { BarSearch } from './BarSearch';
+ *
+ * const MyComponent = () => {
+ *   const [searchValue, setSearchValue] = useState('');
+ *
+ *   return (
+ *     <BarSearch value={searchValue} setValue={setSearchValue} />
+ *   );
+ * };
+ */
 export const BarSearch = ({value, setValue}: BarSearchProps) => {
   let inputRef: Nullable<TextInput> = null;
 
   /**
-   * The function `handlePressClearSearch` clears the input field and sets the value to an empty string.
+   * Clears the input field and sets the value to an empty string.
    */
   const handlePressClearSearch = () => {
     inputRef!.clear();
     setValue('');
   };
+
   /**
-   * The handleChangeText function updates the value state with the provided text.
-   * @param {string} text - The `text` parameter is a string that represents the new value that needs to
-   * be set.
+   * Updates the value state with the provided text.
+   *
+   * @param {string} text - The new value that needs to be set.
    */
   const handleChangeText = (text: string) => {
     setValue(text);
   };
+
   return (
     <View style={styles.container}>
       <View style={[styles.barSearch, styles.barSearchShadow]}>

@@ -2,8 +2,22 @@ import {Platform} from 'react-native';
 
 import {COLORS} from './colors';
 
-/* The code is exporting a constant variable called `GENERAL_BOX_SHADOW`. This variable is an object
-that contains platform-specific styles for applying a box shadow effect by platform. */
+/**
+ * This code snippet defines a constant named `GENERAL_BOX_SHADOW` which is an object containing different shadow styles based on the platform (iOS or Android).
+ * The shadow styles for iOS include color, offset, opacity, and radius, while for Android it includes elevation.
+ *
+ * Example Usage:
+ * import {GENERAL_BOX_SHADOW} from './code_under_test';
+ *
+ * // Use GENERAL_BOX_SHADOW in a component style
+ * const styles = {
+ *   container: {
+ *     ...GENERAL_BOX_SHADOW,
+ *     // other styles
+ *   },
+ * };
+ */
+
 export const GENERAL_BOX_SHADOW = {
   ...Platform.select({
     ios: {

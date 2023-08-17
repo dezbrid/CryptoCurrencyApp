@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 
 import {BASE_URL_COIN_CAP} from '@env';
 import {TextPorcentColor} from '@components';
-import {getTIkerDetial} from '@services';
+import {getTickerDetail} from '@services';
 import {TickerData, DetailProps} from '@types';
 
 import styles from './styles';
@@ -12,35 +12,39 @@ import styles from './styles';
 /**
  * The `Details` function is a React component that displays the details of a ticker, including its
  * rank, name, symbol, price in USD and BTC, and a corresponding image.
- * @param {DetailProps}  - - `DetailProps`: This is the type definition for the props passed to the
- * `Details` component. It may include properties such as `route`, which is used to access the
- * navigation route parameters.
- * @returns The `Details` component is returning a JSX element that represents the UI of the component.
+ *
+ * @param {DetailProps} route - The `route` prop is an object that contains the navigation route parameters.
+ *
+ * @returns {JSX.Element} The `Details` component returns a JSX element that represents the UI of the component.
  * It includes a `SafeAreaView` component as the root container, which contains a `FastImage` component
  * for displaying an image, and a `View` component for displaying various text elements. The text
  * elements display information about a coin's rank, name, symbol, price in USD, price in BTC, and
+ * percentage change in the last 24 hours.
  */
-export function Details({route}: DetailProps) {
-  const {id: idTiker} = route.params;
+export function Details({route}: DetailProps): JSX.Element {
+  const {id: idTicker} = route.params;
   const [coinDetail, setCoinDetail] = useState<TickerData>();
+
   /**
-   * The function "handleGetDetailTiker" is an asynchronous function that retrieves the detail of a
-   * ticker by its ID and sets the retrieved detail in the state variable "coinDetail".
-   * @param {string} id - The `id` parameter is a string that represents the identifier of a ticker.
+   * The `handleGetDetailTiker` function is an asynchronous function that retrieves the detail of a
+   * ticker by its ID and sets the retrieved detail in the state variable `coinDetail`.
+   *
+   * @param {string} id - The ID of the ticker.
+   * @returns {Promise<void>} A promise that resolves when the detail is fetched and set in the state.
    */
-  const handleGetDetailTiker = async (id: string) => {
+  const handleGetDetailTiker = async (id: string): Promise<void> => {
     try {
-      const detail = await getTIkerDetial(id);
+      const detail = await getTickerDetail(id);
       setCoinDetail(detail);
     } catch (error) {}
   };
-
   /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
-  `useEffect` hook is used to call the `handleGetDetailTiker` function whenever the `idTiker`
+  `useEffect` hook is used to call the `handleGetDetailTiker` function whenever the `idTicker`
   variable changes. */
   useEffect(() => {
-    handleGetDetailTiker(idTiker);
-  }, [idTiker]);
+    handleGetDetailTiker(idTicker);
+  }, [idTicker]);
+
   return (
     <SafeAreaView style={styles.container}>
       <FastImage

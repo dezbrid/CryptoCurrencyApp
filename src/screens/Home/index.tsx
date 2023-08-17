@@ -29,8 +29,14 @@ type ListKeyExtractor = (item: TickerData, index: number) => string;
 
 const REQUEST_LIMIT = 100;
 
-/* The code is defining a functional component called "Home" that represents the main screen of a React
-Native app. */
+/**
+ * The Home component represents the main screen of a React Native app.
+ * It fetches ticker data from an API, displays it in a list, and allows the user to search for specific tickers.
+ * The component also handles refreshing the data and loading more data when the end of the list is reached.
+ *
+ * @param {HomeProps} navigation - The navigation prop passed from the parent component.
+ * @returns {JSX.Element} - The rendered Home component.
+ */
 export function Home({navigation}: HomeProps) {
   const [mainList, setMainList] = useState<MainListInfo>(INITIAL_MAIN_LIST);
   const [tickerList, setTickerList] = useState<TickerData[]>([]);
